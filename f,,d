@@ -1,4 +1,29 @@
-fjdjhfjhioh
-dklgo;ggg,b
-ogdior
-[gghgdfhl
+pipeline{
+    agent any
+
+    stages {
+
+        stages("build") {
+
+            steps {
+
+            }
+        }
+        
+        stage("test") {
+            step {
+
+            }
+        }
+          stage("deploy") {
+              steps {
+
+              }
+          
+
+
+
+            
+        }
+    }
+}
