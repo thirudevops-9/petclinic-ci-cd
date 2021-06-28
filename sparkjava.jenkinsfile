@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('scm checkout') {
+            steps {
+                git changelog: false, poll: false, url: 'https://github.com/prasad888/sparkjava-war-example.git'
+            }
+        }
+        
+        
+        stage('build stage') {
+            steps {
+                sh '/opt/maven38/bin/mvn clean package'
+            }
+        }
+       
+       
+       stage('storage ') {
+            steps {
+                sh 'mv target/sparkjava-hello-world-1.0.war target/sparkjava-$BUILD_NUMBER.war'
+                sh 'aws s3 cp target/sparkjava-$BUILD_NUMBER.war s3://sparkjava123'
+            }
+        } 
+      
+      
+      stage('Deploy Stage') {
+            steps {
+                sh 'scp target/sparkjava-$BUILD_NUMBER.war root@10.0.104.250:/opt/tomcat/webapps/sparkjava.war'
+            }
+        }
+    }
+}
